@@ -15,9 +15,16 @@ def create_boards():
 
     return make_response(f"Board id:{new_board.board_id} created, 201")
 
-# @boards_bp.route("", methods=["GET"])
-# def get_all_boards():
-#     all_boards = Board.query.all()
-#     boards_response = []
-#     for board in all_boards:
-#         boards_response.append()
+@boards_bp.route("", methods=["GET"])
+def get_all_boards():
+    all_boards = Board.query.all()
+    boards_response = []
+    for board in all_boards:
+        new_board = {
+            "board_id": board.board_id,
+            "title": board.title,
+            "owner": board.owner
+        }
+        boards_response.append(new_board)
+
+    return jsonify(boards_response), 200
