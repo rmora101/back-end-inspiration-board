@@ -23,8 +23,20 @@ def get_all_boards():
         new_board = {
             "board_id": board.board_id,
             "title": board.title,
-            "owner": board.owner
+            # "owner": board.owner
         }
         boards_response.append(new_board)
 
     return jsonify(boards_response), 200
+
+@boards_bp.route("/<board_id>", methods=["GET"])
+def get_one_board(board_id):
+    board = Board.query.get(board_id)
+
+    board_data = {
+            "board_id": board.board_id,
+            "title": board.title
+    }
+    
+    return jsonify(board_data), 200
+
