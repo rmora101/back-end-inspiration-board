@@ -20,12 +20,7 @@ def get_all_cards():
     cards = Card.query.all()
 
     for card in cards:
-        new_card = {
-            "card_id": card.card_id,
-            "message": card.message,
-            "likes_count": card.likes_count
-        }
-        response.append(new_card)
+        response.append(card.to_dict())
 
     return jsonify(response), 200
 
