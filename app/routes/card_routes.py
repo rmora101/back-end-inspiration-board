@@ -33,10 +33,21 @@ def create_cards():
     return make_response(f"Card id:{new_card.card_id} created, 201")
 
 @card_bp.route("/<card_id>", methods=["DELETE"])
-def delete_cards(card_id):
+def delete_card(card_id):
     card = Card.query.get_or_404(card_id)
 
     db.session.delete(card)
     db.session.commit()
 
     return {"details": f'Card {card_id} successfully deleted'}, 200
+
+@card_bp.route("/<card_id>", methods=["PATCH"])
+def update_card_likes(card_id):
+
+    request_data = request.get_json()
+    card = Card.query.get_or_404(card_id)
+
+    card.likes_count = request_data["likes_count"]
+
+    db.session.commit()
+    return {"details": f"Card {card_id}'s likes successfully updated"}, 200
