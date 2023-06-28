@@ -20,12 +20,12 @@ def get_all_boards():
     all_boards = Board.query.all()
     boards_response = []
     for board in all_boards:
-        new_board = {
-            "board_id": board.board_id,
-            "title": board.title,
+        # new_board = {
+        #     "board_id": board.board_id,
+        #     "title": board.title,
             # "owner": board.owner
-        }
-        boards_response.append(new_board)
+        # }
+        boards_response.append(board.to_dict())
 
     return jsonify(boards_response), 200
 
