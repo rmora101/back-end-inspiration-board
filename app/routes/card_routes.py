@@ -19,3 +19,15 @@ def get_all_cards():
         response.append(new_card)
 
     return jsonify(response), 200
+
+
+@card_bp.route("", methods=["POST"])
+def create_cards():
+    request_body = request.get_json()
+    new_card = Card(message=request_body["message"], 
+                      likes_count=request_body["likes_count"])
+
+    db.session.add(new_card)
+    db.session.commit()
+
+    return make_response(f"Card id:{new_card.card_id} created, 201")
