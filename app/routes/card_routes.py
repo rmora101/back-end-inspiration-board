@@ -25,9 +25,18 @@ def get_all_cards():
 def create_cards():
     request_body = request.get_json()
     new_card = Card(message=request_body["message"], 
-                      likes_count=request_body["likes_count"])
+                    likes_count=request_body["likes_count"])
 
     db.session.add(new_card)
     db.session.commit()
 
     return make_response(f"Card id:{new_card.card_id} created, 201")
+
+@card_bp.route("/<card_id>", methods=["DELETE"])
+def delete_cards(card_id):
+    card = Card.query.get_or_404(card_id)
+
+    db.session.delete(card)
+    db.session.commit()
+
+    return {"details": f'Card {card_id} successfully deleted'}, 200
