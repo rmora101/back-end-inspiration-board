@@ -31,3 +31,14 @@ def get_one_board(board_id):
     
     return {"board": board.to_dict()}, 200
 
+'''board and card routes below'''
+@boards_bp.route("/<board_id>/cards", methods=["GET"])
+def get_cards_from_board(board_id):
+    response = []
+    board = validate_item(Board, board_id)
+
+    for card in board.cards:
+        response.append(card.to_dict())
+
+    return jsonify(response), 200
+
