@@ -52,16 +52,19 @@ def get_cards_from_board(board_id):
 @boards_bp.route("/<board_id>/cards", methods=["POST"])
 def make_new_card(board_id):
     board = validate_item(Board, board_id)
-    request_data = request.get_json()
+    request_body = request.get_json()
 
 
-    for card_id in request_data["card_ids"]:
-        card = validate_item(Card, card_id)
-        card.board = board
-        
-    db.session.commit()
+    new_card = Card(
+        message=request_body["message"],
+        likes_count=request_body["likes_count"],
+        board = board
+    )
 
-    return jsonify(response), 200
+    db.session.add(new_card) 
+    db.session.commit(new_card)
+
+    return jsonify("new card created"), 200
     # return {
     #     "id": board.board_id,
     #     "card_ids": request_data["card_ids"]
