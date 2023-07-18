@@ -62,7 +62,7 @@ def make_new_card(board_id):
     )
 
     db.session.add(new_card) 
-    db.session.commit(new_card)
+    db.session.commit()
 
     return jsonify("new card created"), 200
     # return {
