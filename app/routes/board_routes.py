@@ -57,7 +57,6 @@ def make_new_card(board_id):
 
     new_card = Card(
         message=request_body["message"],
-        likes_count=request_body["likes_count"],
         board = board
     )
 

@@ -28,8 +28,8 @@ def get_all_cards():
 @card_bp.route("", methods=["POST"])
 def create_cards():
     request_body = request.get_json()
-    new_card = Card(message=request_body["message"], 
-                    likes_count=request_body["likes_count"])
+    new_card = Card(message=request_body["message"])
+                    # likes_count=request_body["likes_count"])
 
     db.session.add(new_card)
     db.session.commit()
