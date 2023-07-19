@@ -32,6 +32,14 @@ def get_one_board(board_id):
     
     return {"board": board.to_dict()}, 200
 
+@boards_bp.route("/<board_id>", methods=["DELETE"])
+def delete_board(board_id):
+    board = validate_item(Board, board_id)
+    db.session.delete(board)
+    db.session.commit()
+
+    return {"details": f'Board {board_id} successfully deleted'}, 200 
+
 '''board and card routes below'''
 @boards_bp.route("/<board_id>/cards", methods=["GET"])
 def get_cards_from_board(board_id):
